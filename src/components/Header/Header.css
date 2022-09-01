@@ -34,3 +34,21 @@
 .navigation__link:hover{
     background-color: rgb(224, 224, 224)
 }
+
+.menu__button{
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .navigation__link{
+        display: none;
+    }
+
+    .menu__button{
+        display: block;
+    }
+
+    .user__avatar>div:first-child{
+        display: none;
+    }
+}

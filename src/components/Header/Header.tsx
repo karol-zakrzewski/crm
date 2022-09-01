@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import { FaHome, FaDollarSign } from "react-icons/fa";
+import { FaHome, FaDollarSign, FaBars } from "react-icons/fa";
 import { MdContactPhone } from "react-icons/md";
 import { Avatar } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -16,7 +16,7 @@ const Header = () => {
           </a>
         </li>
         <li className="navigation__item">
-          <a href="/contacts" className="navigation__link">
+          <a href="/companies" className="navigation__link">
             <MdContactPhone />
           </a>
         </li>
@@ -35,6 +35,9 @@ const Header = () => {
         >
           K
         </Avatar>
+        <div className="menu__button">
+          <FaBars />
+        </div>
       </div>
     </header>
   );
