@@ -1,45 +1,25 @@
 import React from "react";
 import "./Header.css";
-import { FaHome, FaDollarSign, FaBars } from "react-icons/fa";
-import { MdContactPhone } from "react-icons/md";
-import { Avatar } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { IconButton } from "@mui/material";
+import { FaUserPlus } from "react-icons/fa";
 
-const Header = () => {
+type Props = {
+  title: string;
+  handleOpen: () => void;
+};
+
+const Header = ({ title, handleOpen }: Props) => {
   return (
-    <header className="container">
-      <div className="container__logo">Force Crm</div>
-      <ul className="container__navigation">
-        <li className="navigation__item">
-          <a href="/home" className="navigation__link">
-            <FaHome />
-          </a>
-        </li>
-        <li className="navigation__item">
-          <a href="/companies" className="navigation__link">
-            <MdContactPhone />
-          </a>
-        </li>
-        <li className="navigation__item">
-          <a href="/sales" className="navigation__link">
-            <FaDollarSign />
-          </a>
-        </li>
-      </ul>
-
-      <div className="user__avatar">
-        <Avatar
-          sx={{ bgcolor: grey[400] }}
-          alt="Remy Sharp"
-          src="/broken-image.jpg"
-        >
-          K
-        </Avatar>
-        <div className="menu__button">
-          <FaBars />
-        </div>
-      </div>
-    </header>
+    <div className="companies__header">
+      <h2 className="title">{title}</h2>
+      <IconButton
+        color="primary"
+        aria-label="add to shopping cart"
+        onClick={handleOpen}
+      >
+        <FaUserPlus />
+      </IconButton>
+    </div>
   );
 };
 

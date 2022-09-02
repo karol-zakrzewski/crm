@@ -1,10 +1,10 @@
-import { IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./Companies.css";
-import { FaUserPlus } from "react-icons/fa";
 import { getCompanies } from "../../api";
 import { CompaniesType } from "../../types/types";
-import CompaniesList from "./CompaniesList/CompaniesList";
+import CompaniesList from "../../components/CompaniesList/CompaniesList";
+import Header from "../../components/Header/Header";
+import AddCompany from "../../components/AddCompany/AddCompany";
 
 const defaultValue = {
   id: "",
@@ -14,9 +14,13 @@ const defaultValue = {
 };
 
 const Companies = () => {
+  const [open, setOpen] = useState(false);
+
   const [companiesList, setCompaniesList] = useState<CompaniesType[]>([
     defaultValue,
   ]);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const retriveCompanies = async () => {
     const companies = await getCompanies();
@@ -27,20 +31,11 @@ const Companies = () => {
   useEffect(() => {
     retriveCompanies();
   }, []);
-  const handleClick = () => {};
 
   return (
     <div className="companies__container">
-      <div className="companies__header">
-        <h2 className="title">Companies</h2>
-        <IconButton
-          color="primary"
-          aria-label="add to shopping cart"
-          onClick={handleClick}
-        >
-          <FaUserPlus />
-        </IconButton>
-      </div>
+      <Header title={"Companies"} handleOpen={handleOpen} />
+      <AddCompany open={open} handleClose={handleClose} />
       <CompaniesList companiesList={companiesList} />
     </div>
   );
