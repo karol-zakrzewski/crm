@@ -9,13 +9,7 @@ const CompaniesList = ({ companiesList }: Props) => {
   const renderCompanies = companiesList.map((company) => {
     return (
       <div key={company.id}>
-        <h3>{company.id}</h3>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
+        <h3>{company.name}</h3>
       </div>
     );
   });
