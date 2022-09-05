@@ -31,6 +31,8 @@ const AddCompany = ({ open, handleClose }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //TODO
+    // convert single fields city,street,zipcode to object address
     await addCompany(formInputValue);
     setFormInputValue(defaultValue);
     handleClose();
