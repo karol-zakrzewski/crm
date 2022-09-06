@@ -1,6 +1,6 @@
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "./api";
-import { AddCompanyFormTypes, CompaniesType } from "../types/types";
+import { CompaniesType } from "../types/types";
 
 const COLLECTION_NAMES = {
   COMPANIES: "companies",
@@ -19,7 +19,7 @@ export const getCompanies = async () => {
   return data;
 };
 
-export const addCompany = async (data: AddCompanyFormTypes) => {
+export const addCompany = async (data: CompaniesType) => {
   try {
     await addDoc(companiesCollection, data);
   } catch (error: any) {

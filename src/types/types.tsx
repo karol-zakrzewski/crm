@@ -1,12 +1,15 @@
 export interface CompaniesType {
-  id: string;
+  id?: string;
   name: string;
-  nip: number;
+  nip: string;
   address: {
     city: string;
     street: string;
     zipcode: string;
   };
+  phone: string;
+  email: string;
+  person: string;
 }
 
 export type AddCompanyFormTypes = {

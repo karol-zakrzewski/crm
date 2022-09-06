@@ -10,7 +10,10 @@ const defaultValue = {
   id: "",
   name: "",
   address: { city: "", zipcode: "", street: "" },
-  nip: 0,
+  nip: "",
+  phone: "",
+  email: "",
+  person: "",
 };
 
 const Companies = () => {
@@ -24,7 +27,6 @@ const Companies = () => {
 
   const retriveCompanies = async () => {
     const companies = await getCompanies();
-    console.log(companies);
     setCompaniesList(companies);
   };
 

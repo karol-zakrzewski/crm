@@ -2,6 +2,7 @@ import { Modal } from "@mui/material";
 import React, { useState } from "react";
 import { addCompany } from "../../api";
 import { AddCompanyFormTypes } from "../../types/types";
+import { covertFormDataToDBObject } from "../../utils";
 import AddCompanyForm from "../Form/AddCompanyForm";
 import "./AddCompany.css";
 
@@ -31,9 +32,8 @@ const AddCompany = ({ open, handleClose }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //TODO
-    // convert single fields city,street,zipcode to object address
-    await addCompany(formInputValue);
+    const companyToAdd = covertFormDataToDBObject(formInputValue);
+    await addCompany(companyToAdd);
     setFormInputValue(defaultValue);
     handleClose();
   };
