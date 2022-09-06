@@ -1,5 +1,6 @@
 import { Modal } from "@mui/material";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { addCompany } from "../../api";
 import { AddCompanyFormTypes } from "../../types/types";
 import { covertFormDataToDBObject } from "../../utils";
@@ -9,6 +10,7 @@ import "./AddCompany.css";
 type Props = {
   open: boolean;
   handleClose: () => void;
+  getCompanies: () => void;
 };
 
 const defaultValue: AddCompanyFormTypes = {
@@ -22,19 +24,19 @@ const defaultValue: AddCompanyFormTypes = {
   person: "",
 };
 
-const AddCompany = ({ open, handleClose }: Props) => {
-  const [formInputValue, setFormInputValue] =
-    useState<AddCompanyFormTypes>(defaultValue);
+const AddCompany = ({ open, handleClose, getCompanies }: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<AddCompanyFormTypes>();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setFormInputValue({ ...formInputValue, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const companyToAdd = covertFormDataToDBObject(formInputValue);
+  const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
+    const companyToAdd = covertFormDataToDBObject(data);
     await addCompany(companyToAdd);
-    setFormInputValue(defaultValue);
+    reset();
+    getCompanies();
     handleClose();
   };
   return (
@@ -42,15 +44,15 @@ const AddCompany = ({ open, handleClose }: Props) => {
       <Modal
         open={open}
         onClose={handleClose}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         component="form"
         autoComplete="off"
         noValidate
       >
         <AddCompanyForm
-          formInputValue={formInputValue}
-          handleChange={handleChange}
           handleClose={handleClose}
+          register={register}
+          errors={errors}
         />
       </Modal>
     </div>

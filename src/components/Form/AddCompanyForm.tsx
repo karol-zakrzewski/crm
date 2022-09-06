@@ -1,17 +1,15 @@
 import React from "react";
+import "./AddCompanyForm.css";
+import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
 import { AddCompanyFormTypes } from "../../types/types";
 
 type Props = {
-  formInputValue: AddCompanyFormTypes;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleClose: () => void;
+  register: UseFormRegister<AddCompanyFormTypes>;
+  errors: FieldErrorsImpl<AddCompanyFormTypes>;
 };
 
-const AddCompanyForm = ({
-  formInputValue,
-  handleChange,
-  handleClose,
-}: Props) => {
+const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
   return (
     <div className="form__container">
       <div className="close" onClick={handleClose}>
@@ -22,12 +20,10 @@ const AddCompanyForm = ({
         <label className="text__label" htmlFor="name">
           Nazwa
         </label>
-        <input
-          type="text"
-          name="name"
-          value={formInputValue.name}
-          onChange={handleChange}
-        />
+        <input type="text" {...register("name", { required: true })} />
+        {errors.name && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="nip">
@@ -35,10 +31,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="nip"
-          value={formInputValue.nip}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("nip", { required: true })}
         />
+        {errors.nip && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="city">
@@ -46,10 +44,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="city"
-          value={formInputValue.city}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("city", { required: true })}
         />
+        {errors.city && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="street">
@@ -57,10 +57,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="street"
-          value={formInputValue.street}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("street", { required: true })}
         />
+        {errors.street && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="zipcode">
@@ -68,10 +70,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="zipcode"
-          value={formInputValue.zipcode}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("zipcode", { required: true })}
         />
+        {errors.zipcode && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="phone">
@@ -79,10 +83,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="phone"
-          value={formInputValue.phone}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("phone", { required: true })}
         />
+        {errors.phone && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="email">
@@ -90,10 +96,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="email"
-          value={formInputValue.email}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("email", { required: true })}
         />
+        {errors.email && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <div className="text__field">
         <label className="text__label" htmlFor="person">
@@ -101,10 +109,12 @@ const AddCompanyForm = ({
         </label>
         <input
           type="text"
-          name="person"
-          value={formInputValue.person}
-          onChange={handleChange}
+          defaultValue=""
+          {...register("person", { required: true })}
         />
+        {errors.person && (
+          <span className="form__error">This field is required</span>
+        )}
       </div>
       <button className="add__company__button">Dodaj</button>
     </div>

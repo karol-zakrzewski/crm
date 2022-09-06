@@ -37,7 +37,11 @@ const Companies = () => {
   return (
     <div className="companies__container">
       <Header title={"Companies"} handleOpen={handleOpen} />
-      <AddCompany open={open} handleClose={handleClose} />
+      <AddCompany
+        open={open}
+        handleClose={handleClose}
+        getCompanies={retriveCompanies}
+      />
       <CompaniesList companiesList={companiesList} />
     </div>
   );
