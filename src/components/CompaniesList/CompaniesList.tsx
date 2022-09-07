@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import ComponentElement from "./CompanyElement/ComponentElement";
+import CompanyElement from "./CompanyElement/CompanyElement";
 
 type Props = {
   companiesList: CompaniesType[];
@@ -17,7 +17,7 @@ type Props = {
 
 const CompaniesList = ({ companiesList }: Props) => {
   const renderCompanies = companiesList.map((company) => {
-    return <ComponentElement company={company} key={company.nip} />;
+    return <CompanyElement company={company} key={company.nip} />;
   });
   return (
     <TableContainer component={Paper}>
@@ -29,6 +29,7 @@ const CompaniesList = ({ companiesList }: Props) => {
             <TableCell align="right">Miasto</TableCell>
             <TableCell align="right">Ulica</TableCell>
             <TableCell align="right">Kod pocztowy</TableCell>
+            <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderCompanies}</TableBody>

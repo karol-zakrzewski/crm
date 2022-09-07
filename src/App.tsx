@@ -5,6 +5,7 @@ import Companies from "./pages/Companies/Companies";
 import Home from "./pages/Home/Home";
 import Sales from "./pages/Sales/Sales";
 import Nav from "./components/Navigation/Nav";
+import Company from "./pages/Companies/Company/Company";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/companies" element={<Companies />} />
+          <Route path="/company/:id" element={<Company />} />
           <Route path="/sales" element={<Sales />} />
         </Routes>
       </BrowserRouter>

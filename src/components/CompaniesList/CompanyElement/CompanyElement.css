@@ -1,0 +1,13 @@
+.link__company__details{
+    background-color: rgb(144, 202, 249);
+    color: rgba(0, 0, 0, 0.87);
+    padding: 6px 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: background .3s ease;
+}
+
+.link__company__details:hover {
+    background-color: rgb(66, 165, 245);
+}
