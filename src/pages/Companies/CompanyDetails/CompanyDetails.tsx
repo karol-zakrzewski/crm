@@ -20,7 +20,9 @@ const defaultValue = {
 
 const Company = () => {
   const { id } = useParams<{ id?: any }>();
-  const [companyData, setCompanyData] = useState<CompaniesType>(defaultValue);
+  const [companyData, setCompanyData] = useState<CompaniesType | undefined>(
+    defaultValue
+  );
 
   const getCompanyById = async () => {
     const res = await getCompany(id).then((value) => {

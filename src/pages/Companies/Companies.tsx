@@ -26,8 +26,12 @@ const Companies = () => {
   const handleClose = () => setOpen(false);
 
   const retriveCompanies = async () => {
-    const companies = await getCompanies();
-    setCompaniesList(companies);
+    try {
+      const companies = await getCompanies();
+      setCompaniesList(companies);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
