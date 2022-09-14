@@ -1,6 +1,8 @@
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../api";
+import Details from "../../../components/Details/Details";
 import { CompaniesType } from "../../../types/types";
 import "./CompanyDetails.css";
 
@@ -33,7 +35,7 @@ const Company = () => {
   useEffect(() => {
     getCompanyById();
   }, []);
-  return <div>{id}</div>;
+  return <Details />;
 };
 
 export default Company;
