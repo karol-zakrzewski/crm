@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../api";
@@ -21,21 +20,21 @@ const defaultValue = {
 };
 
 const Company = () => {
-  const { id } = useParams<{ id?: any }>();
+  const { id } = useParams<{ id: any }>();
   const [companyData, setCompanyData] = useState<CompaniesType | undefined>(
     defaultValue
   );
 
-  const getCompanyById = async () => {
+  const getCompanyById = async (id: string) => {
     const res = await getCompany(id).then((value) => {
       setCompanyData(value);
     });
     return res;
   };
   useEffect(() => {
-    getCompanyById();
-  }, []);
-  return <Details />;
+    getCompanyById(id);
+  }, [id]);
+  return <Details companyData={companyData} />;
 };
 
 export default Company;

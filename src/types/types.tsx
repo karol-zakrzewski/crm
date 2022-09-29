@@ -22,3 +22,12 @@ export type AddCompanyFormTypes = {
   email: string;
   person: string;
 };
+
+export type Person = {
+  id?: string;
+  name: string;
+  lastName: string;
+  company: string;
+  phone: number;
+  email: string;
+};
