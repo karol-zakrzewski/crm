@@ -1,15 +1,23 @@
 import React from "react";
 import "./AddCompanyForm.css";
 import { FieldErrorsImpl, UseFormRegister } from "react-hook-form";
-import { AddCompanyFormTypes } from "../../types/types";
+import { AddCompanyFormTypes, CompaniesType } from "../../types/types";
 
 type Props = {
   handleClose: () => void;
   register: UseFormRegister<AddCompanyFormTypes>;
   errors: FieldErrorsImpl<AddCompanyFormTypes>;
+  companyData?: CompaniesType;
 };
 
-const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
+const AddCompanyForm = ({
+  handleClose,
+  register,
+  errors,
+  companyData,
+}: Props) => {
+  console.log(companyData);
+
   return (
     <div className="form__container">
       <div className="close" onClick={handleClose}>
@@ -20,7 +28,10 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         <label className="text__label" htmlFor="name">
           Nazwa
         </label>
-        <input type="text" {...register("name", { required: true })} />
+        <input
+          type="text"
+          {...register("name", { required: true, value: companyData?.name })}
+        />
         {errors.name && (
           <span className="form__error">This field is required</span>
         )}
@@ -32,7 +43,7 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         <input
           type="text"
           defaultValue=""
-          {...register("nip", { required: true })}
+          {...register("nip", { required: true, value: companyData?.nip })}
         />
         {errors.nip && (
           <span className="form__error">This field is required</span>
@@ -45,7 +56,10 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         <input
           type="text"
           defaultValue=""
-          {...register("city", { required: true })}
+          {...register("city", {
+            required: true,
+            value: companyData?.address.city,
+          })}
         />
         {errors.city && (
           <span className="form__error">This field is required</span>
@@ -58,7 +72,10 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         <input
           type="text"
           defaultValue=""
-          {...register("street", { required: true })}
+          {...register("street", {
+            required: true,
+            value: companyData?.address.street,
+          })}
         />
         {errors.street && (
           <span className="form__error">This field is required</span>
@@ -71,7 +88,10 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         <input
           type="text"
           defaultValue=""
-          {...register("zipcode", { required: true })}
+          {...register("zipcode", {
+            required: true,
+            value: companyData?.address.zipcode,
+          })}
         />
         {errors.zipcode && (
           <span className="form__error">This field is required</span>
@@ -84,7 +104,7 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         <input
           type="text"
           defaultValue=""
-          {...register("phone", { required: true })}
+          {...register("phone", { required: true, value: companyData?.phone })}
         />
         {errors.phone && (
           <span className="form__error">This field is required</span>
@@ -96,8 +116,7 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         </label>
         <input
           type="text"
-          defaultValue=""
-          {...register("email", { required: true })}
+          {...register("email", { required: true, value: companyData?.email })}
         />
         {errors.email && (
           <span className="form__error">This field is required</span>
@@ -109,8 +128,10 @@ const AddCompanyForm = ({ handleClose, register, errors }: Props) => {
         </label>
         <input
           type="text"
-          defaultValue=""
-          {...register("person", { required: true })}
+          {...register("person", {
+            required: true,
+            value: companyData?.person,
+          })}
         />
         {errors.person && (
           <span className="form__error">This field is required</span>

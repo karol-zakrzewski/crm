@@ -8,7 +8,7 @@
 
 import { AddCompanyFormTypes, CompaniesType } from "../types/types";
 
-export const covertFormDataToDBObject = ({
+export const convertFormDataToDBObject = ({
   name,
   nip,
   city,

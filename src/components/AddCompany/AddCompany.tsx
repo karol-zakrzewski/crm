@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { addCompany } from "../../api";
 import { AddCompanyFormTypes } from "../../types/types";
-import { covertFormDataToDBObject } from "../../utils";
+import { convertFormDataToDBObject } from "../../utils";
 import AddCompanyForm from "../Form/AddCompanyForm";
 import "./AddCompany.css";
 
@@ -33,7 +33,7 @@ const AddCompany = ({ open, handleClose, getCompanies }: Props) => {
   } = useForm<AddCompanyFormTypes>();
 
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
-    const companyToAdd = covertFormDataToDBObject(data);
+    const companyToAdd = convertFormDataToDBObject(data);
     await addCompany(companyToAdd);
     reset();
     getCompanies();

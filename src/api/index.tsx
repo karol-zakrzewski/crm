@@ -36,9 +36,6 @@ export const getCompany = async (id: string) => {
       return {
         id: value.id,
         ...value.data(),
-        phone: "",
-        email: "",
-        person: "",
       } as CompaniesType;
     });
     return data;

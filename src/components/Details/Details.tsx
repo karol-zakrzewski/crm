@@ -1,9 +1,9 @@
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaUserPlus } from "react-icons/fa";
 import { CompaniesType, Person } from "../../types/types";
 import AddEmployee from "../AddEmployee/AddEmployee";
+import CompanyInfo from "./CompanyInfo/CompanyInfo";
 import "./Details.css";
 
 type Props = {
@@ -18,31 +18,10 @@ const Details = ({ companyData }: Props) => {
     formState: { errors },
     reset,
   } = useForm<Person>();
+
   return (
     <div className="container__details">
-      <Box
-        sx={{
-          width: 1 / 4,
-          height: 500,
-          margin: 3,
-          backgroundColor: "white",
-          boxShadow: 1,
-        }}
-      >
-        <div>
-          <h2>{companyData?.name}</h2>
-          <span>
-            <FaUserPlus />
-            <button onClick={() => setOpen(true)}>dodaj pracownika</button>
-          </span>
-          <p>NIP: {companyData?.nip}</p>
-          <p>Phone: {companyData?.phone}</p>
-          <p>Person: {companyData?.person}</p>
-          <p>ul. {companyData?.address.street}</p>
-          <span>{companyData?.address.zipcode} </span>
-          <span>{companyData?.address.city}</span>
-        </div>
-      </Box>
+      <CompanyInfo companyData={companyData} setOpen={setOpen} />
       <Box
         sx={{
           width: 1 / 2,
