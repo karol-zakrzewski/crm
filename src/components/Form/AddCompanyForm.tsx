@@ -16,8 +16,6 @@ const AddCompanyForm = ({
   errors,
   companyData,
 }: Props) => {
-  console.log(companyData);
-
   return (
     <div className="form__container">
       <div className="close" onClick={handleClose}>

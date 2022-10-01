@@ -27,14 +27,15 @@ const Company = () => {
 
   const getCompanyById = async (id: string) => {
     const res = await getCompany(id).then((value) => {
-      setCompanyData(value);
+      setCompanyData({ id, ...value } as CompaniesType);
     });
     return res;
   };
   useEffect(() => {
     getCompanyById(id);
   }, [id]);
-  return <Details companyData={companyData} />;
+
+  return <Details companyData={companyData} setCompanyData={setCompanyData} />;
 };
 
 export default Company;

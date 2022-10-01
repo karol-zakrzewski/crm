@@ -8,9 +8,10 @@ import "./Details.css";
 
 type Props = {
   companyData: CompaniesType | undefined;
+  setCompanyData: (data: CompaniesType | undefined) => void;
 };
 
-const Details = ({ companyData }: Props) => {
+const Details = ({ companyData, setCompanyData }: Props) => {
   const [open, setOpen] = useState(false);
   const {
     register,
@@ -21,7 +22,11 @@ const Details = ({ companyData }: Props) => {
 
   return (
     <div className="container__details">
-      <CompanyInfo companyData={companyData} setOpen={setOpen} />
+      <CompanyInfo
+        companyData={companyData}
+        setOpen={setOpen}
+        setCompanyData={setCompanyData}
+      />
       <Box
         sx={{
           width: 1 / 2,

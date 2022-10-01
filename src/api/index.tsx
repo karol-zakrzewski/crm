@@ -6,6 +6,7 @@ import {
   DocumentData,
   getDoc,
   getDocs,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "./api";
 import { AddCompanyFormTypes, CompaniesType } from "../types/types";
@@ -48,4 +49,9 @@ export const addCompany = async (data: CompaniesType) => {
   } catch (error: any) {
     return error.code;
   }
+};
+
+export const editCompany = async (id = "", data: CompaniesType) => {
+  const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
+  await setDoc(docRef, data);
 };

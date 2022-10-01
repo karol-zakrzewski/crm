@@ -7,9 +7,10 @@ import EditCompany from "../../EditCompany/EditCompany";
 type Props = {
   companyData: CompaniesType | undefined;
   setOpen: (value: boolean) => void;
+  setCompanyData: (data: CompaniesType | undefined) => void;
 };
 
-const CompanyInfo = ({ companyData, setOpen }: Props) => {
+const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
   const [openEditForm, setOpenEditForm] = useState(false);
   return (
     <Box
@@ -59,6 +60,7 @@ const CompanyInfo = ({ companyData, setOpen }: Props) => {
         openEditForm={openEditForm}
         handleClose={() => setOpenEditForm(false)}
         companyData={companyData}
+        setCompanyData={setCompanyData}
       />
     </Box>
   );
