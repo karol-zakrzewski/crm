@@ -19,9 +19,9 @@ const defaultValue = {
 const Companies = () => {
   const [open, setOpen] = useState(false);
 
-  const [companiesList, setCompaniesList] = useState<CompaniesType[]>([
-    defaultValue,
-  ]);
+  const [companiesList, setCompaniesList] = useState<
+    CompaniesType[] | undefined
+  >([defaultValue]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -46,7 +46,10 @@ const Companies = () => {
         handleClose={handleClose}
         getCompanies={retriveCompanies}
       />
-      <CompaniesList companiesList={companiesList} />
+      <CompaniesList
+        companiesList={companiesList}
+        setCompaniesList={setCompaniesList}
+      />
     </div>
   );
 };

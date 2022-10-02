@@ -11,3 +11,54 @@
 .link__company__details:hover {
     background-color: rgb(66, 165, 245);
 }
+
+.action__btn{
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    transition: all .5s ease;
+    color:rgb(144, 202, 249);
+}
+
+.action__btn.hidden{
+    display: none;
+}
+
+.action__btn:hover{
+    transform: rotate(180deg);
+}
+
+.action__cell{
+    width: 85px;
+    height: 70px;
+    position: relative;
+}
+
+.context__menu{
+    font-size: 22px;
+    color: #EF5350;
+    display: none;
+    
+}
+
+.context__menu__btn--edit{
+    color:rgb(144, 202, 249);
+    transition: color .5s ease;
+}
+
+.context__menu__btn--edit:hover {
+    color: rgb(66, 165, 245);
+}
+.context__menu__btn--delete {
+    transition: color .3s ease;
+}
+.context__menu__btn--delete:hover{
+color: #c8605e;
+}
+
+.context__menu.active{
+    display: flex;
+    gap: 7px;
+    justify-content: flex-end;
+    
+}

@@ -29,7 +29,7 @@ export const getCompanies = async () => {
   return data;
 };
 
-export const getCompany = async (id: string) => {
+export const getCompany = async (id = "") => {
   try {
     const data: CompaniesType = await getDoc(
       doc(db, COLLECTION_NAMES.COMPANIES, id)

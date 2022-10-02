@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CompaniesType } from "../../types/types";
 import {
   Paper,
@@ -12,12 +12,22 @@ import {
 import CompanyElement from "./CompanyElement/CompanyElement";
 
 type Props = {
-  companiesList: CompaniesType[];
+  companiesList?: CompaniesType[];
+  setCompaniesList: (data: CompaniesType[] | undefined) => void;
 };
 
-const CompaniesList = ({ companiesList }: Props) => {
-  const renderCompanies = companiesList.map((company) => {
-    return <CompanyElement company={company} key={company.nip} />;
+const CompaniesList = ({ companiesList, setCompaniesList }: Props) => {
+  const [openEditForm, setOpenEditForm] = useState(false);
+  const renderCompanies = companiesList?.map((company) => {
+    return (
+      <CompanyElement
+        openEditForm={openEditForm}
+        handleClose={() => setOpenEditForm(false)}
+        company={company}
+        setCompaniesList={setCompaniesList}
+        key={company.nip}
+      />
+    );
   });
   return (
     <TableContainer component={Paper}>
@@ -29,6 +39,7 @@ const CompaniesList = ({ companiesList }: Props) => {
             <TableCell align="right">Miasto</TableCell>
             <TableCell align="right">Ulica</TableCell>
             <TableCell align="right">Kod pocztowy</TableCell>
+            <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>

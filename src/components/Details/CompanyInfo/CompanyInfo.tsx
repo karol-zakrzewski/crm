@@ -28,17 +28,17 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
           <div className="btn__wrapper">
             <button
               className="add__employee__btn"
-              onClick={() => setOpenEditForm(true)}
-            >
-              Edytuj
-              <FaUserEdit className="icon__user" />
-            </button>
-            <button
-              className="add__employee__btn"
               onClick={() => setOpen(true)}
             >
               Dodaj pracownika
               <FaUserPlus className="icon__user" />
+            </button>
+            <button
+              className="add__employee__btn"
+              onClick={() => setOpenEditForm(true)}
+            >
+              Edytuj
+              <FaUserEdit className="icon__user" />
             </button>
           </div>
         </div>
@@ -52,7 +52,9 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
         </div>
         <p>Phone: {companyData?.phone}</p>
         <p>Person: {companyData?.person}</p>
-        <p>ul. {companyData?.address.street}</p>
+        <p>Email: {companyData?.email}</p>
+        <span>Adres</span>
+        <span>ul. {companyData?.address.street}</span>
         <span>{companyData?.address.zipcode} </span>
         <span>{companyData?.address.city}</span>
       </div>
