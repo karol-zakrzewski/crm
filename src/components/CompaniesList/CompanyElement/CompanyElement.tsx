@@ -6,6 +6,7 @@ import "./CompanyElement.css";
 import { IoEllipsisVerticalCircleOutline } from "react-icons/io5";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import EditCompany from "../../EditCompany/EditCompany";
+import { deleteCompany, getCompanies } from "../../../api";
 
 type Props = {
   openEditForm: boolean;
@@ -32,6 +33,11 @@ const ComponentElement = ({
     currentTarget.classList.add("hidden");
     nextElementSibling?.classList.add("active");
   };
+
+  const handleDelete = async (id: string | undefined) => {
+    deleteCompany(id);
+    setCompaniesList(await getCompanies());
+  };
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -57,15 +63,13 @@ const ComponentElement = ({
           />
           <div className="context__menu">
             <FaEdit className="context__menu__btn context__menu__btn--edit" />
-            <FaTrash className="context__menu__btn context__menu__btn--delete" />
+            <FaTrash
+              className="context__menu__btn context__menu__btn--delete"
+              onClick={() => handleDelete(company?.id)}
+            />
           </div>
         </TableCell>
       </TableRow>
-      {/* <EditCompany
-        openEditForm={openEditForm}
-        handleClose={handleClose}
-        companyData={company}
-      /> */}
     </>
   );
 };

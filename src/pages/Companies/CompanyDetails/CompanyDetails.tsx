@@ -22,18 +22,19 @@ const defaultValue = {
 const Company = () => {
   const { id } = useParams<{ id: any }>();
   const [companyData, setCompanyData] = useState<CompaniesType | undefined>(
-    defaultValue
+    undefined
   );
 
   const getCompanyById = async (id: string) => {
-    const res = await getCompany(id).then((value) => {
-      setCompanyData({ id, ...value } as CompaniesType);
-    });
-    return res;
+    setCompanyData(await getCompany(id));
   };
   useEffect(() => {
     getCompanyById(id);
   }, [id]);
+
+  if (companyData === undefined) {
+    return <h2>Oops coś poszło nie tak...</h2>;
+  }
 
   return <Details companyData={companyData} setCompanyData={setCompanyData} />;
 };

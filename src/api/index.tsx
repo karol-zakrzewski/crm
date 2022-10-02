@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   CollectionReference,
+  deleteDoc,
   doc,
   DocumentData,
   getDoc,
@@ -29,29 +30,39 @@ export const getCompanies = async () => {
   return data;
 };
 
-export const getCompany = async (id = "") => {
-  try {
-    const data: CompaniesType = await getDoc(
-      doc(db, COLLECTION_NAMES.COMPANIES, id)
-    ).then((value) => {
-      return {
-        id: value.id,
-        ...value.data(),
-      } as CompaniesType;
-    });
-    return data;
-  } catch (error) {}
-};
+export const getCompany = async (id: string | undefined) => {
+  if (typeof id === "string") {
+    const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
+    const docSnap = await getDoc(docRef);
 
-export const addCompany = async (data: CompaniesType) => {
-  try {
-    await addDoc(companiesCollection, data);
-  } catch (error: any) {
-    return error.code;
+    if (docSnap.exists()) {
+      return {
+        id: docSnap.id,
+        ...docSnap.data(),
+      } as CompaniesType;
+    } else {
+      throw Error("Can't loaded data");
+    }
   }
 };
 
-export const editCompany = async (id = "", data: CompaniesType) => {
-  const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
-  await setDoc(docRef, data);
+export const addCompany = async (data: CompaniesType) => {
+  await addDoc(companiesCollection, data);
+};
+
+export const editCompany = async (
+  id: string | undefined,
+  data: CompaniesType
+) => {
+  if (typeof id === "string") {
+    const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
+    await setDoc(docRef, data);
+  }
+};
+
+export const deleteCompany = async (id: string | undefined) => {
+  if (typeof id === "string") {
+    const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
+    await deleteDoc(docRef);
+  }
 };

@@ -54,9 +54,9 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
         <p>Person: {companyData?.person}</p>
         <p>Email: {companyData?.email}</p>
         <span>Adres</span>
-        <span>ul. {companyData?.address.street}</span>
-        <span>{companyData?.address.zipcode} </span>
-        <span>{companyData?.address.city}</span>
+        <span>ul. {companyData?.address?.street}</span>
+        <span>{companyData?.address?.zipcode} </span>
+        <span>{companyData?.address?.city}</span>
       </div>
       <EditCompany
         openEditForm={openEditForm}
