@@ -11,7 +11,7 @@ import {
   getDocs,
   onSnapshot,
   QuerySnapshot,
-  setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "./api";
 import { CompaniesType } from "../types/types";
@@ -79,11 +79,19 @@ export const addCompany = async (data: Omit<CompaniesType, "id">) => {
 
 export const editCompany = async (
   id: string | undefined,
-  data: CompaniesType
+  data: Omit<CompaniesType, "id">
 ) => {
   if (typeof id === "string") {
     const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
-    await setDoc(docRef, data);
+
+    try {
+      await updateDoc(docRef, data);
+    } catch (error) {
+      if (error instanceof FirestoreError) {
+        throw new Error(firebaseError[error.code]);
+      }
+      throw new Error("Operacja się nie powiodła");
+    }
   }
 };
 

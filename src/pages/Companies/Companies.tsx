@@ -16,11 +16,6 @@ const defaultValue = {
 };
 
 const Companies = () => {
-  // const { isLoading, data, error } = useQuery({
-  //   queryKey: ["companies"],
-  //   queryFn: async () => await fetchCompanies(),
-  // });
-
   const [companiesList, setCompaniesList] = useState<
     CompaniesType[] | undefined
   >([defaultValue]);

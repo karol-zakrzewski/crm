@@ -15,6 +15,7 @@ import { FiMoreVertical } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { deleteCompany } from "../../../api";
 import ConfirmDialog from "../../ui/dialog/ConfirmDialog";
+import { paths } from "../../../utils/paths";
 
 type Props = {
   company: CompaniesType;
@@ -98,7 +99,9 @@ const ComponentElement = ({ company }: Props) => {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem>
+            <MenuItem
+              onClick={() => navigate(`${paths.editComapny}/${company.id}`)}
+            >
               <ListItemIcon>
                 <FaEdit />
               </ListItemIcon>

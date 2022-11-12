@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
 import { CompaniesType } from "../../../types/types";
-import EditCompany from "../../EditCompany/EditCompany";
 
 type Props = {
   companyData: CompaniesType | undefined;
@@ -58,12 +57,12 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
         <span>{companyData?.address?.zipcode} </span>
         <span>{companyData?.address?.city}</span>
       </div>
-      <EditCompany
+      {/* <EditCompany
         openEditForm={openEditForm}
         handleClose={() => setOpenEditForm(false)}
         companyData={companyData}
         setCompanyData={setCompanyData}
-      />
+      /> */}
     </Box>
   );
 };

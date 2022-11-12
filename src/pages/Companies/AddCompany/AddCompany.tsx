@@ -1,11 +1,11 @@
 import { Box, Button } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { addCompany } from "../../api";
-import { AddCompanyFormTypes } from "../../types/types";
-import { convertFormDataToDBObject } from "../../utils";
-import { paths } from "../../utils/paths";
-import TextInput from "../ui/inputs/TextInput";
+import { addCompany } from "../../../api";
+import { AddCompanyFormTypes } from "../../../types/types";
+import { convertFormDataToDBObject } from "../../../utils";
+import { paths } from "../../../utils/paths";
+import TextInput from "../../../components/ui/inputs/TextInput";
 import "./AddCompany.css";
 
 const defaultValue: AddCompanyFormTypes = {
@@ -29,13 +29,7 @@ const AddCompany = () => {
     defaultValues: defaultValue,
   });
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
-    const { zipcode, phone, nip } = data;
-    const writableData = convertFormDataToDBObject({
-      ...data,
-      phone: Number(phone),
-      zipcode: Number(zipcode),
-      nip: Number(nip),
-    });
+    const writableData = convertFormDataToDBObject(data);
     try {
       await addCompany(writableData);
       // TODO show toast message
