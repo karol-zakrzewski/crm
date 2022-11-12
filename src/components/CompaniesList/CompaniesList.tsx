@@ -20,7 +20,7 @@ const CompaniesList = ({ companiesList }: Props) => {
   });
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="Tabela przedsiębiorstw">
         <TableHead>
           <TableRow>
             <TableCell>Nazwa firmy</TableCell>

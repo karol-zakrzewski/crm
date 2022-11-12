@@ -1,0 +1,9 @@
+{
+  "confirmDialog": {
+    "text": "Czy chcesz usunąć przedsiębiorstwo?"
+  },
+  "button": {
+    "cancel": "Anuluj",
+    "delete": "Usuń"
+  }
+}

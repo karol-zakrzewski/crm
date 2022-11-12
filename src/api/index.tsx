@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   DocumentData,
+  DocumentReference,
   FirestoreError,
   getDoc,
   getDocs,
@@ -88,7 +89,19 @@ export const editCompany = async (
 
 export const deleteCompany = async (id: string | undefined) => {
   if (typeof id === "string") {
-    const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
-    await deleteDoc(docRef);
+    const docRef = doc(
+      db,
+      COLLECTION_NAMES.COMPANIES,
+      id
+    ) as DocumentReference<CompaniesType>;
+
+    try {
+      await deleteDoc(docRef);
+    } catch (error) {
+      if (error instanceof FirestoreError) {
+        throw new Error(firebaseError[error.code]);
+      }
+      throw new Error("Operacja się nie powiodła");
+    }
   }
 };

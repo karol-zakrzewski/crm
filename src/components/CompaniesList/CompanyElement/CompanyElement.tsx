@@ -7,13 +7,14 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CompaniesType } from "../../../types/types";
 import "./CompanyElement.css";
 import { FiMoreVertical } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { deleteCompany } from "../../../api";
+import ConfirmDialog from "../../ui/dialog/ConfirmDialog";
 
 type Props = {
   company: CompaniesType;
@@ -21,7 +22,8 @@ type Props = {
 
 const ComponentElement = ({ company }: Props) => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,8 +32,15 @@ const ComponentElement = ({ company }: Props) => {
     setAnchorEl(null);
   };
 
-  const handleDelete = async (id: string | undefined) => {
-    deleteCompany(id);
+  const handleDelete = async () => {
+    try {
+      deleteCompany(company.id);
+      // TODO show toast message
+    } catch (error) {
+      if (error instanceof Error) {
+        // TODO show error toast message
+      }
+    }
   };
   return (
     <>
@@ -95,7 +104,7 @@ const ComponentElement = ({ company }: Props) => {
               </ListItemIcon>
               <ListItemText>Edit</ListItemText>
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => setIsOpenConfirmDialog(true)}>
               <ListItemIcon>
                 <FaTrash />
               </ListItemIcon>
@@ -104,6 +113,11 @@ const ComponentElement = ({ company }: Props) => {
           </Menu>
         </TableCell>
       </TableRow>
+      <ConfirmDialog
+        open={isOpenConfirmDialog}
+        handleClose={() => setIsOpenConfirmDialog(false)}
+        handleDelete={handleDelete}
+      />
     </>
   );
 };
