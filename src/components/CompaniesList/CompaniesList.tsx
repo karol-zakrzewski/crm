@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { CompaniesType } from "../../types/types";
 import {
   Paper,
@@ -13,21 +12,11 @@ import CompanyElement from "./CompanyElement/CompanyElement";
 
 type Props = {
   companiesList?: CompaniesType[];
-  setCompaniesList: (data: CompaniesType[] | undefined) => void;
 };
 
-const CompaniesList = ({ companiesList, setCompaniesList }: Props) => {
-  const [openEditForm, setOpenEditForm] = useState(false);
+const CompaniesList = ({ companiesList }: Props) => {
   const renderCompanies = companiesList?.map((company) => {
-    return (
-      <CompanyElement
-        openEditForm={openEditForm}
-        handleClose={() => setOpenEditForm(false)}
-        company={company}
-        setCompaniesList={setCompaniesList}
-        key={company.nip}
-      />
-    );
+    return <CompanyElement company={company} key={company.nip} />;
   });
   return (
     <TableContainer component={Paper}>
@@ -40,7 +29,7 @@ const CompaniesList = ({ companiesList, setCompaniesList }: Props) => {
             <TableCell align="right">Ulica</TableCell>
             <TableCell align="right">Kod pocztowy</TableCell>
             <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align="right">Akcja</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderCompanies}</TableBody>

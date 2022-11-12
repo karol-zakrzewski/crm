@@ -5,12 +5,16 @@ import {
   deleteDoc,
   doc,
   DocumentData,
+  FirestoreError,
   getDoc,
   getDocs,
+  onSnapshot,
+  QuerySnapshot,
   setDoc,
 } from "firebase/firestore";
 import { db } from "./api";
-import { AddCompanyFormTypes, CompaniesType } from "../types/types";
+import { CompaniesType } from "../types/types";
+import { firebaseError } from "./firestoreError";
 
 const COLLECTION_NAMES = {
   COMPANIES: "companies",
@@ -30,6 +34,17 @@ export const getCompanies = async () => {
   return data;
 };
 
+export const fetchCompanies = async (
+  handler: (snapshot: QuerySnapshot<Omit<CompaniesType, "id">>) => void
+) => {
+  const companiesCollection = collection(
+    db,
+    COLLECTION_NAMES.COMPANIES
+  ) as CollectionReference<Omit<CompaniesType, "id">>;
+
+  onSnapshot(companiesCollection, handler);
+};
+
 export const getCompany = async (id: string | undefined) => {
   if (typeof id === "string") {
     const docRef = doc(db, COLLECTION_NAMES.COMPANIES, id);
@@ -46,8 +61,19 @@ export const getCompany = async (id: string | undefined) => {
   }
 };
 
-export const addCompany = async (data: CompaniesType) => {
-  await addDoc(companiesCollection, data);
+export const addCompany = async (data: Omit<CompaniesType, "id">) => {
+  const collectionRef = collection(
+    db,
+    COLLECTION_NAMES.COMPANIES
+  ) as CollectionReference<Omit<CompaniesType, "id">>;
+  try {
+    await addDoc(collectionRef, data);
+  } catch (error) {
+    if (error instanceof FirestoreError) {
+      throw new Error(firebaseError[error.code]);
+    }
+    throw new Error("Operacja się nie powiodła");
+  }
 };
 
 export const editCompany = async (

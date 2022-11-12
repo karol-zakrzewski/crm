@@ -1,51 +1,66 @@
-import { TableCell, TableRow } from "@mui/material";
-import React, { MouseEventHandler } from "react";
-import { Link } from "react-router-dom";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  TableCell,
+  TableRow,
+} from "@mui/material";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { CompaniesType } from "../../../types/types";
 import "./CompanyElement.css";
-import { IoEllipsisVerticalCircleOutline } from "react-icons/io5";
+import { FiMoreVertical } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import EditCompany from "../../EditCompany/EditCompany";
-import { deleteCompany, getCompanies } from "../../../api";
+import { deleteCompany } from "../../../api";
 
 type Props = {
-  openEditForm: boolean;
-  handleClose: () => void;
   company: CompaniesType;
-  setCompaniesList: (data: CompaniesType[] | undefined) => void;
 };
 
-const ComponentElement = ({
-  openEditForm,
-  handleClose,
-  company,
-  setCompaniesList,
-}: Props) => {
-  const openContextMenu = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-    const { currentTarget } = e;
-    const { nextElementSibling } = currentTarget;
-
-    if (nextElementSibling?.classList.contains("active")) {
-      nextElementSibling.classList.remove("active");
-      currentTarget.classList.remove("hidden");
-      return;
-    }
-    currentTarget.classList.add("hidden");
-    nextElementSibling?.classList.add("active");
+const ComponentElement = ({ company }: Props) => {
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const handleDelete = async (id: string | undefined) => {
     deleteCompany(id);
-    setCompaniesList(await getCompanies());
   };
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <TableCell component="th" scope="row">
+        <TableCell
+          component="th"
+          scope="row"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           {company.name}
         </TableCell>
-        <TableCell align="right">{company.nip}</TableCell>
-        <TableCell align="right">{company.address.city}</TableCell>
+        <TableCell
+          align="right"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          {company.nip}
+        </TableCell>
+        <TableCell
+          align="right"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          {company.address.city}
+        </TableCell>
         <TableCell align="right">{company.address.street}</TableCell>
         <TableCell align="right">{company.address.zipcode}</TableCell>
         <TableCell align="right">
@@ -57,17 +72,36 @@ const ComponentElement = ({
           </Link>
         </TableCell>
         <TableCell align="right" className="action__cell">
-          <IoEllipsisVerticalCircleOutline
-            className="action__btn"
-            onClick={openContextMenu}
-          />
-          <div className="context__menu">
-            <FaEdit className="context__menu__btn context__menu__btn--edit" />
-            <FaTrash
-              className="context__menu__btn context__menu__btn--delete"
-              onClick={() => handleDelete(company?.id)}
-            />
-          </div>
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <FiMoreVertical />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              "aria-labelledby": "long-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <FaEdit />
+              </ListItemIcon>
+              <ListItemText>Edit</ListItemText>
+            </MenuItem>
+            <MenuItem>
+              <ListItemIcon>
+                <FaTrash />
+              </ListItemIcon>
+              <ListItemText>Delete</ListItemText>
+            </MenuItem>
+          </Menu>
         </TableCell>
       </TableRow>
     </>

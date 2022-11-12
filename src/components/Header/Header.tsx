@@ -1,24 +1,22 @@
-import React from "react";
 import "./Header.css";
 import { IconButton } from "@mui/material";
 import { FaUserPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { paths } from "../../utils/paths";
 
 type Props = {
   title: string;
-  handleOpen: () => void;
 };
 
-const Header = ({ title, handleOpen }: Props) => {
+const Header = ({ title }: Props) => {
   return (
     <div className="companies__header">
       <h2 className="title">{title}</h2>
-      <IconButton
-        color="primary"
-        aria-label="add to shopping cart"
-        onClick={handleOpen}
-      >
-        <FaUserPlus />
-      </IconButton>
+      <Link to={paths.addComapny}>
+        <IconButton color="primary" aria-label="Add company">
+          <FaUserPlus />
+        </IconButton>
+      </Link>
     </div>
   );
 };

@@ -6,19 +6,27 @@ import Home from "./pages/Home/Home";
 import Sales from "./pages/Sales/Sales";
 import Nav from "./components/Navigation/Nav";
 import CompanyDetails from "./pages/Companies/CompanyDetails/CompanyDetails";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AddCompany from "./components/AddCompany/AddCompany";
+import { paths } from "./utils/paths";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/companies" element={<Companies />} />
-          <Route path="/company/:id" element={<CompanyDetails />} />
-          <Route path="/sales" element={<Sales />} />
-        </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path={paths.companies} element={<Companies />} />
+            <Route path={paths.addComapny} element={<AddCompany />} />
+            <Route path="/company/:id" element={<CompanyDetails />} />
+            <Route path="/sales" element={<Sales />} />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </div>
   );
 }

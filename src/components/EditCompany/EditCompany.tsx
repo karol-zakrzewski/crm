@@ -1,15 +1,15 @@
 import { Modal } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AddCompanyFormTypes, CompaniesType } from "../../types/types";
-import AddCompanyForm from "../Form/AddCompanyForm";
 import { convertFormDataToDBObject } from "../../utils";
-import { editCompany, getCompany } from "../../api";
+import { editCompany, getCompanies, getCompany } from "../../api";
 
 interface Props {
   openEditForm: boolean;
   handleClose: () => void;
   companyData?: CompaniesType;
   setCompanyData: (data: CompaniesType | undefined) => void;
+  // setCompaniesData?: (data: CompaniesType[] | undefined) => void;
 }
 
 const EditCompany = ({
@@ -17,7 +17,8 @@ const EditCompany = ({
   handleClose,
   companyData,
   setCompanyData,
-}: Props) => {
+}: // setCompaniesData,
+Props) => {
   const {
     register,
     handleSubmit,
@@ -29,6 +30,10 @@ const EditCompany = ({
     const companyDataToEdit = convertFormDataToDBObject(data);
     await editCompany(companyData?.id, companyDataToEdit);
     setCompanyData(await getCompany(companyData?.id));
+    // if (Object.keys(data).length > 0) {
+    // } else {
+    //   setCompaniesData(await getCompanies());
+    // }
     reset();
     handleClose();
   };
@@ -40,12 +45,13 @@ const EditCompany = ({
       autoComplete="off"
       noValidate
     >
-      <AddCompanyForm
+      {/* <AddCompanyForm
         handleClose={handleClose}
         register={register}
         errors={errors}
         companyData={companyData}
-      ></AddCompanyForm>
+      ></AddCompanyForm> */}
+      <div>Modal</div>
     </Modal>
   );
 };
