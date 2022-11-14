@@ -50,7 +50,6 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
           />
         </div>
         <p>Phone: {companyData?.phone}</p>
-        <p>Person: {companyData?.persons}</p>
         <p>Email: {companyData?.email}</p>
         <span>Adres</span>
         <span>ul. {companyData?.address?.street}</span>

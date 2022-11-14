@@ -16,5 +16,4 @@ export type FieldNames =
   | "zipcode"
   | "email"
   | "nip"
-  | "persons"
   | "phone";

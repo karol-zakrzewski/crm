@@ -96,18 +96,6 @@ const CompanyForm = ({ control, errors, handleSubmit, onSubmit }: Props) => {
       <TextInput
         control={control}
         errors={errors}
-        fieldName="persons"
-        label="Osoba kontaktowa"
-        rules={{
-          required: {
-            value: true,
-            message: "To pole jest wymagane",
-          },
-        }}
-      />
-      <TextInput
-        control={control}
-        errors={errors}
         fieldName="phone"
         label="Numer telefonu"
         rules={{

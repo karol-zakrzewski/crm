@@ -2,7 +2,6 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CompaniesType, Person } from "../../types/types";
-import AddEmployee from "../AddEmployee/AddEmployee";
 import CompanyInfo from "./CompanyInfo/CompanyInfo";
 import "./Details.css";
 
@@ -45,12 +44,6 @@ const Details = ({ companyData, setCompanyData }: Props) => {
           boxShadow: 1,
         }}
       ></Box>
-      <AddEmployee
-        open={open}
-        register={register}
-        handleClose={() => setOpen(false)}
-        errors={errors}
-      />
     </div>
   );
 };

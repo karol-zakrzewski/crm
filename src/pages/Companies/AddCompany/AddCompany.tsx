@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { addCompany } from "../../../api";
-import { AddCompanyFormTypes } from "../../../types/types";
+import { AddCompanyFormTypes, CompaniesType } from "../../../types/types";
 import { convertFormDataToDBObject } from "../../../utils";
 import { paths } from "../../../utils/paths";
 import TextInput from "../../../components/ui/inputs/TextInput";
@@ -16,7 +16,6 @@ const defaultValue: AddCompanyFormTypes = {
   zipcode: 0,
   phone: 0,
   email: "",
-  persons: "",
 };
 
 const AddCompany = () => {
@@ -29,9 +28,10 @@ const AddCompany = () => {
     defaultValues: defaultValue,
   });
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
-    const writableData = convertFormDataToDBObject(data);
+    // @ts-ignore
+    const writableData: CompaniesType = convertFormDataToDBObject(data);
     try {
-      await addCompany(writableData);
+      await addCompany({ ...writableData, persons: [] });
       // TODO show toast message
       setTimeout(() => {
         navigate(paths.companies);
@@ -123,18 +123,6 @@ const AddCompany = () => {
             minLength: {
               value: 10,
               message: "Niepoprawny numer telefonu",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="persons"
-          label="Osoba kontaktowa"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
             },
           }}
         />

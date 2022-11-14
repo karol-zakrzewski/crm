@@ -12,7 +12,7 @@ const defaultValue = {
   nip: 0,
   phone: 0,
   email: "",
-  persons: "",
+  persons: [],
 };
 
 const Companies = () => {

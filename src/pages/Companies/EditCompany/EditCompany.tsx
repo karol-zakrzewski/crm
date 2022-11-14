@@ -17,7 +17,6 @@ const defaultValue: AddCompanyFormTypes = {
   zipcode: 0,
   phone: 0,
   email: "",
-  persons: "",
 };
 
 const EditCompany = () => {
@@ -38,7 +37,7 @@ const EditCompany = () => {
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
     const writableData = convertFormDataToDBObject(data);
     try {
-      await editCompany(id, writableData);
+      await editCompany(id, { ...writableData, persons: [] });
       // TODO show toast message
       setTimeout(() => {
         navigate(paths.companies);
@@ -58,13 +57,11 @@ const EditCompany = () => {
         phone,
         nip,
         email,
-        persons,
       } = data;
       setValue("name", name);
       setValue("city", city);
       setValue("email", email);
       setValue("nip", nip);
-      setValue("persons", persons);
       setValue("phone", phone);
       setValue("street", street);
       setValue("zipcode", zipcode);

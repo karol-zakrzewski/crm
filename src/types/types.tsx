@@ -9,7 +9,13 @@ export interface CompaniesType {
   };
   phone: number;
   email: string;
-  persons: string;
+  persons: Employee[];
+}
+
+export interface Employee {
+  name: string;
+  phone: number;
+  emial: string;
 }
 
 export type AddCompanyFormTypes = {
@@ -20,7 +26,6 @@ export type AddCompanyFormTypes = {
   zipcode: number;
   phone: number;
   email: string;
-  persons: string;
 };
 
 export type Person = {

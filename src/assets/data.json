@@ -5,5 +5,13 @@
   "button": {
     "cancel": "Anuluj",
     "delete": "Usuń"
+  },
+  "dialog": {
+    "addEmployee": {
+      "title": "Add employee"
+    }
+  },
+  "validation": {
+    "required": "Required"
   }
 }

@@ -8,14 +8,12 @@ export const convertFormDataToDBObject = ({
   zipcode,
   phone,
   email,
-  persons,
-}: AddCompanyFormTypes): CompaniesType => {
+}: AddCompanyFormTypes): Omit<CompaniesType, "persons"> => {
   return {
     name,
     nip: Number(nip),
     address: { city, street, zipcode: Number(zipcode) },
     phone: Number(phone),
     email,
-    persons,
   };
 };
