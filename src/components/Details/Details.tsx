@@ -13,13 +13,6 @@ type Props = {
 
 const Details = ({ employees, companyData, setCompanyData }: Props) => {
   const [open, setOpen] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<Employee>();
-
   return (
     <div className="container__details">
       <CompanyInfo

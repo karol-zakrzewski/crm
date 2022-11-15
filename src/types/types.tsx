@@ -17,7 +17,7 @@ export interface CompaniesType {
 export interface Employee {
   name: string;
   phone: number;
-  emial: string;
+  email: string;
 }
 
 export type AddCompanyFormTypes = {
