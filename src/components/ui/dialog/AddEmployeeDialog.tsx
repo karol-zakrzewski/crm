@@ -6,10 +6,19 @@ import {
   Button,
   Dialog as MuiDialog,
 } from "@mui/material";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldErrorsImpl,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 import json from "../../../assets/data.json";
 
 type Props = {
+  control: Control<Inputs, any>;
+  errors: FieldErrorsImpl<Inputs>;
+  handleSubmit: UseFormHandleSubmit<Inputs>;
+  onSubmit: (data: Inputs) => void;
   open: boolean;
   handleClose: () => void;
   handleAddEmployee: () => void;
@@ -21,83 +30,86 @@ type Inputs = {
   email: string;
 };
 
-const AddEmployeeDialog = ({ open, handleClose, handleAddEmployee }: Props) => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+const AddEmployeeDialog = ({
+  control,
+  errors,
+  handleSubmit,
+  onSubmit,
+  open,
+  handleClose,
+  handleAddEmployee,
+}: Props) => {
   return (
     <MuiDialog open={open} onClose={handleClose}>
       <DialogTitle>{json.dialog.addEmployee.title}</DialogTitle>
-      <DialogContent>
-        <Controller
-          name="name"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: json.validation.required,
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              label="Name"
-              variant="outlined"
-              error={errors["name"] ? true : undefined}
-              helperText={errors["name"] && errors["name"]?.message}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          name="email"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              label="Email"
-              variant="outlined"
-              error={errors["email"] ? true : undefined}
-              helperText={errors["email"] && errors["email"]?.message}
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          name="phone"
-          control={control}
-          rules={{
-            required: {
-              value: true,
-              message: "",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              type="number"
-              label="Phone number"
-              variant="outlined"
-              error={errors["phone"] ? true : undefined}
-              helperText={errors["phone"] && errors["phone"]?.message}
-              {...field}
-            />
-          )}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleAddEmployee} type="submit">
-          Subscribe
-        </Button>
-      </DialogActions>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent>
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: json.validation.required,
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                label="Name"
+                variant="outlined"
+                error={errors["name"] ? true : undefined}
+                helperText={errors["name"] && errors["name"]?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: json.validation.required,
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                label="Email"
+                variant="outlined"
+                error={errors["email"] ? true : undefined}
+                helperText={errors["email"] && errors["email"]?.message}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="phone"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: json.validation.required,
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                type="number"
+                label="Phone number"
+                variant="outlined"
+                error={errors["phone"] ? true : undefined}
+                helperText={errors["phone"] && errors["phone"]?.message}
+                {...field}
+              />
+            )}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Anuluj</Button>
+          <Button onClick={handleAddEmployee} type="submit">
+            Dodaj pracownika
+          </Button>
+        </DialogActions>
+      </form>
     </MuiDialog>
   );
 };

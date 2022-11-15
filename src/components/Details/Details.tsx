@@ -1,23 +1,24 @@
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { CompaniesType, Person } from "../../types/types";
+import { CompaniesType, Employee, Person } from "../../types/types";
 import CompanyInfo from "./CompanyInfo/CompanyInfo";
 import "./Details.css";
 
 type Props = {
+  employees: Employee[] | null;
   companyData: CompaniesType | undefined;
   setCompanyData: (data: CompaniesType | undefined) => void;
 };
 
-const Details = ({ companyData, setCompanyData }: Props) => {
+const Details = ({ employees, companyData, setCompanyData }: Props) => {
   const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Person>();
+  } = useForm<Employee>();
 
   return (
     <div className="container__details">
@@ -34,7 +35,12 @@ const Details = ({ companyData, setCompanyData }: Props) => {
           backgroundColor: "white",
           boxShadow: 1,
         }}
-      ></Box>
+      >
+        {employees &&
+          employees.map((employee) => {
+            return <p>{employee.name}</p>;
+          })}
+      </Box>
       <Box
         sx={{
           width: 1 / 4,

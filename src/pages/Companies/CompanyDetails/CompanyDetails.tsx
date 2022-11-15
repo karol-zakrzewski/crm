@@ -1,8 +1,9 @@
+import { getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../api";
 import Details from "../../../components/Details/Details";
-import { CompaniesType } from "../../../types/types";
+import { CompaniesType, Employee } from "../../../types/types";
 import "./CompanyDetails.css";
 
 const defaultValue = {
@@ -24,6 +25,7 @@ const Company = () => {
   const [companyData, setCompanyData] = useState<CompaniesType | undefined>(
     undefined
   );
+  const [employees, setEmployees] = useState<Employee[] | null>(null);
 
   const getCompanyById = async (id: string) => {
     setCompanyData(await getCompany(id));
@@ -32,11 +34,34 @@ const Company = () => {
     getCompanyById(id);
   }, [id]);
 
+  useEffect(() => {
+    if (companyData) {
+      companyData.persons.forEach((employeeRef) => {
+        // @ts-ignore
+        getDoc(employeeRef).then((doc: DocumentSnapshot<Employee>) => {
+          setEmployees((value) => {
+            if (value?.length) {
+              return [...value, doc.data()];
+            }
+
+            return [doc.data()];
+          });
+        });
+      });
+    }
+  }, [companyData]);
+
   if (companyData === undefined) {
     return <h2>Oops coś poszło nie tak...</h2>;
   }
 
-  return <Details companyData={companyData} setCompanyData={setCompanyData} />;
+  return (
+    <Details
+      companyData={companyData}
+      setCompanyData={setCompanyData}
+      employees={employees}
+    />
+  );
 };
 
 export default Company;

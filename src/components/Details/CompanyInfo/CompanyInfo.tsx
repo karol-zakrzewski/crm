@@ -1,16 +1,30 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
 import { CompaniesType } from "../../../types/types";
+import AddEmployeeDialog from "../../ui/dialog/AddEmployeeDialog";
 
 type Props = {
   companyData: CompaniesType | undefined;
   setOpen: (value: boolean) => void;
   setCompanyData: (data: CompaniesType | undefined) => void;
 };
+type Inputs = {
+  name: string;
+  phone: number;
+  email: string;
+};
 
 const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
-  const [openEditForm, setOpenEditForm] = useState(false);
+  const [openAddEmployeeForm, setOpenAddEmployeeForm] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>({ defaultValues: { name: "", email: "", phone: 0 } });
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   return (
     <Box
       sx={{
@@ -27,15 +41,12 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
           <div className="btn__wrapper">
             <button
               className="add__employee__btn"
-              onClick={() => setOpen(true)}
+              onClick={() => setOpenAddEmployeeForm(true)}
             >
               Dodaj pracownika
               <FaUserPlus className="icon__user" />
             </button>
-            <button
-              className="add__employee__btn"
-              onClick={() => setOpenEditForm(true)}
-            >
+            <button className="add__employee__btn">
               Edytuj
               <FaUserEdit className="icon__user" />
             </button>
@@ -56,12 +67,15 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
         <span>{companyData?.address?.zipcode} </span>
         <span>{companyData?.address?.city}</span>
       </div>
-      {/* <EditCompany
-        openEditForm={openEditForm}
-        handleClose={() => setOpenEditForm(false)}
-        companyData={companyData}
-        setCompanyData={setCompanyData}
-      /> */}
+      <AddEmployeeDialog
+        control={control}
+        errors={errors}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        open={openAddEmployeeForm}
+        handleClose={() => setOpenAddEmployeeForm(false)}
+        handleAddEmployee={() => console.log("edit")}
+      />
     </Box>
   );
 };
