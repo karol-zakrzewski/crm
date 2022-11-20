@@ -1,12 +1,13 @@
 import { Box, Button } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { addCompany } from "../../../api";
 import { AddCompanyFormTypes, CompaniesType } from "../../../types/types";
 import { convertFormDataToDBObject } from "../../../utils";
 import { paths } from "../../../utils/paths";
 import TextInput from "../../../components/ui/inputs/TextInput";
 import "./AddCompany.css";
+import { useDispatch } from "react-redux";
+import { addCompanyThunk } from "../../../store/companies-slice";
 
 const defaultValue: AddCompanyFormTypes = {
   name: "",
@@ -19,6 +20,7 @@ const defaultValue: AddCompanyFormTypes = {
 };
 
 const AddCompany = () => {
+  const dispatch: (dispatch: any) => Promise<void> = useDispatch();
   const navigate = useNavigate();
   const {
     control,
@@ -28,10 +30,10 @@ const AddCompany = () => {
     defaultValues: defaultValue,
   });
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
-    // @ts-ignore
-    const writableData: CompaniesType = convertFormDataToDBObject(data);
+    const writableData: Omit<CompaniesType, "id"> =
+      convertFormDataToDBObject(data);
     try {
-      await addCompany({ ...writableData, persons: [] });
+      dispatch(addCompanyThunk(writableData));
       // TODO show toast message
       setTimeout(() => {
         navigate(paths.companies);

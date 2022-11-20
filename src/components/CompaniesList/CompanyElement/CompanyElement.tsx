@@ -13,15 +13,17 @@ import { CompaniesType } from "../../../types/types";
 import "./CompanyElement.css";
 import { FiMoreVertical } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { deleteCompany } from "../../../api";
 import ConfirmDialog from "../../ui/dialog/ConfirmDialog";
 import { paths } from "../../../utils/paths";
+import { useDispatch } from "react-redux";
+import { deleteCompanyThunk } from "../../../store/companies-slice";
 
 type Props = {
   company: CompaniesType;
 };
 
 const ComponentElement = ({ company }: Props) => {
+  const dispatch: (dispatch: any) => Promise<void> = useDispatch();
   const navigate = useNavigate();
   const [isOpenConfirmDialog, setIsOpenConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -35,7 +37,11 @@ const ComponentElement = ({ company }: Props) => {
 
   const handleDelete = async () => {
     try {
-      deleteCompany(company.id);
+      if (typeof company.id !== "string") {
+        throw new Error("Nieprawidłowe id");
+      }
+      dispatch(deleteCompanyThunk(company.id));
+      setIsOpenConfirmDialog(false);
       // TODO show toast message
     } catch (error) {
       if (error instanceof Error) {

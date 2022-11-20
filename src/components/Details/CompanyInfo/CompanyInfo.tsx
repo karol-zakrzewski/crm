@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
 import { DocumentSnapshot } from "firebase/firestore";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
-import { editCompany } from "../../../api";
 import { addEmployee } from "../../../api/employees";
 import { CompaniesType, Employee } from "../../../types/types";
 import AddEmployeeDialog from "../../ui/dialog/AddEmployeeDialog";
@@ -24,23 +23,14 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({ defaultValues: { name: "", email: "", phone: 0 } });
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const docRef = (await addEmployee(
         data
       )) as unknown as DocumentSnapshot<Employee>;
-      // @ts-ignore
-      if (companyData.persons) {
-        const companyEmployees =
-          companyData?.persons as DocumentSnapshot<Employee>[];
-        // @ts-ignore
-        await editCompany(companyData?.id, {
-          persons: [...companyEmployees, docRef],
-        });
-      }
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

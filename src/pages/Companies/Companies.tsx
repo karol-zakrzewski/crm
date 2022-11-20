@@ -1,33 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./Companies.css";
-import { fetchCompanies } from "../../api";
 import { CompaniesType } from "../../types/types";
 import CompaniesList from "../../components/CompaniesList/CompaniesList";
 import Header from "../../components/Header/Header";
-
-const defaultValue = {
-  id: "",
-  name: "",
-  address: { city: "", zipcode: 0, street: "" },
-  nip: 0,
-  phone: 0,
-  email: "",
-  persons: [],
-};
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCompanies } from "../../store/companies-slice";
 
 const Companies = () => {
-  const [companiesList, setCompaniesList] = useState<
-    CompaniesType[] | undefined
-  >([defaultValue]);
+  const { companiesList } = useSelector(
+    (state: { companies: { companiesList: Omit<CompaniesType, "id">[] } }) =>
+      state.companies
+  );
+  const dispatch: (dispatch: any) => Promise<void> = useDispatch();
 
   useEffect(() => {
-    fetchCompanies((snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
-      setCompaniesList(data);
-    });
-  }, []);
+    dispatch(fetchCompanies());
+  }, [dispatch]);
 
   return (
     <div className="companies__container">

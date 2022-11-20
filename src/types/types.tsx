@@ -1,5 +1,3 @@
-import { DocumentSnapshot } from "firebase/firestore";
-
 export interface CompaniesType {
   id?: string;
   name: string;
@@ -11,7 +9,6 @@ export interface CompaniesType {
   };
   phone: number;
   email: string;
-  persons: DocumentSnapshot<Employee>[];
 }
 
 export interface Employee {

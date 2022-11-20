@@ -2,9 +2,11 @@ import { CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { editCompany, getCompany } from "../../../api";
+import { getCompany } from "../../../api";
 import CompanyForm from "../../../components/Form/CompanyForm";
+import { editCompanyThunk } from "../../../store/companies-slice";
 import { AddCompanyFormTypes } from "../../../types/types";
 import { convertFormDataToDBObject } from "../../../utils";
 import { paths } from "../../../utils/paths";
@@ -34,10 +36,15 @@ const EditCompany = () => {
   } = useForm<AddCompanyFormTypes>({
     defaultValues: defaultValue,
   });
+  const dispatch = useDispatch();
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
     const writableData = convertFormDataToDBObject(data);
     try {
-      await editCompany(id, { ...writableData, persons: [] });
+      if (typeof id !== "string") {
+        throw new Error("Nieprawidłowe id");
+      }
+      // @ts-ignore
+      dispatch(editCompanyThunk(id, writableData));
       // TODO show toast message
       setTimeout(() => {
         navigate(paths.companies);
