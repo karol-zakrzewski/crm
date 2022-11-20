@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../api";
@@ -20,7 +21,7 @@ const Company = () => {
   }, [id]);
 
   if (companyData === undefined) {
-    return <h2>Oops coś poszło nie tak...</h2>;
+    return <CircularProgress />;
   }
 
   return (

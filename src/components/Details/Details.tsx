@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { CompaniesType, Employee, Person } from "../../types/types";
+import { useState } from "react";
+import { CompaniesType, Employee } from "../../types/types";
+import Todo from "../feature/Todo/Todo";
 import CompanyInfo from "./CompanyInfo/CompanyInfo";
 import "./Details.css";
 
@@ -42,7 +42,9 @@ const Details = ({ employees, companyData, setCompanyData }: Props) => {
           backgroundColor: "white",
           boxShadow: 1,
         }}
-      ></Box>
+      >
+        <Todo />
+      </Box>
     </div>
   );
 };

@@ -37,7 +37,6 @@ const CompanyInfo = ({ companyData, setOpen, setCompanyData }: Props) => {
       }
     }
   };
-  console.log(companyData);
 
   return (
     <Box

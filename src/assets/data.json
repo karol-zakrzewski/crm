@@ -9,6 +9,9 @@
   "dialog": {
     "addEmployee": {
       "title": "Add employee"
+    },
+    "addTodo": {
+      "title": "Add Todo"
     }
   },
   "validation": {
