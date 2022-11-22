@@ -16,5 +16,8 @@
   },
   "validation": {
     "required": "Required"
+  },
+  "toastMessage": {
+    "successAddCompany": "Company added"
   }
 }

@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { CompaniesType, Employee } from "../../types/types";
-import Todo from "../feature/Todo/Todo";
+import Todo from "../Feature/Todo/Todo";
 import CompanyInfo from "./CompanyInfo/CompanyInfo";
 import "./Details.css";
 

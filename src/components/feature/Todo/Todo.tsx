@@ -30,7 +30,6 @@ const Todo = () => {
     }
 
     setChecked(newChecked);
-    console.log(checked);
   };
   return (
     <>

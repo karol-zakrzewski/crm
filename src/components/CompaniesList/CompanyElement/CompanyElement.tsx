@@ -17,6 +17,8 @@ import ConfirmDialog from "../../ui/dialog/ConfirmDialog";
 import { paths } from "../../../utils/paths";
 import { useDispatch } from "react-redux";
 import { deleteCompanyThunk } from "../../../store/companies-slice";
+import { toastActions } from "../../../store/toast-slice";
+import jsonText from "../../../assets/data.json";
 
 type Props = {
   company: CompaniesType;
@@ -42,10 +44,22 @@ const ComponentElement = ({ company }: Props) => {
       }
       dispatch(deleteCompanyThunk(company.id));
       setIsOpenConfirmDialog(false);
-      // TODO show toast message
+      dispatch(
+        toastActions.showToast({
+          isOpen: true,
+          message: jsonText.toastMessage.successAddCompany,
+          status: "success",
+        })
+      );
     } catch (error) {
       if (error instanceof Error) {
-        // TODO show error toast message
+        dispatch(
+          toastActions.showToast({
+            isOpen: true,
+            message: error.message,
+            status: "error",
+          })
+        );
       }
     }
   };
