@@ -18,6 +18,8 @@
     "required": "Required"
   },
   "toastMessage": {
-    "successAddCompany": "Company added"
+    "successAddCompany": "Company added",
+    "successAddTodo": "Task added",
+    "failedAddTodo": "Task cannot be added"
   }
 }

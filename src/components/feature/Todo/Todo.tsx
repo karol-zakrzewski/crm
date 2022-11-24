@@ -10,14 +10,14 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import AddTodoDialog from "../../ui/dialog/AddTodoDialog";
 
 const Todo = () => {
   const { id } = useParams();
   const [openAddTodoDialog, setOpenAddTodoDialog] = useState(false);
-  const [checked, setChecked] = React.useState([0]);
+  const [checked, setChecked] = useState([0]);
 
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);

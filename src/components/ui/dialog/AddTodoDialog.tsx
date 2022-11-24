@@ -6,9 +6,12 @@ import {
   Button,
   Dialog,
 } from "@mui/material";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { addTodo, Todo } from "../../../api/todos";
 import json from "../../../assets/data.json";
+import { toastActions } from "../../../store/toast-slice";
 
 type Props = {
   companyId: string | undefined;
@@ -26,7 +29,10 @@ const AddTodoDialog = ({
   openAddTodoDialog,
   handleClose,
 }: Props) => {
+  const [isDisabledAddBtn, setIsDisabledAddBtn] = useState(false);
+  const dispatch = useDispatch();
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
@@ -35,13 +41,30 @@ const AddTodoDialog = ({
   const onSubmit = async (data: Omit<Todo, "id" | "checked">) => {
     try {
       if (typeof companyId !== "string") {
-        throw new Error("Niepoprawne id zadania");
+        throw new Error(json.toastMessage.failedAddTodo);
       }
+      setIsDisabledAddBtn(true);
       await addTodo(companyId, { ...data, checked: false });
+      handleClose();
+      dispatch(
+        toastActions.showToast({
+          isOpen: true,
+          message: json.toastMessage.successAddTodo,
+          status: "success",
+        })
+      );
+      setIsDisabledAddBtn(false);
+      reset();
     } catch (error) {
       if (error instanceof Error) {
-        // TODO show error message
-        alert(error);
+        setIsDisabledAddBtn(false);
+        dispatch(
+          toastActions.showToast({
+            isOpen: true,
+            message: error.message,
+            status: "error",
+          })
+        );
       }
     }
   };
@@ -93,8 +116,12 @@ const AddTodoDialog = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Anuluj</Button>
-          <Button type="submit">Dodaj</Button>
+          <Button variant="outlined" onClick={handleClose}>
+            Anuluj
+          </Button>
+          <Button variant="contained" type="submit" disabled={isDisabledAddBtn}>
+            Dodaj
+          </Button>
         </DialogActions>
       </form>
     </Dialog>

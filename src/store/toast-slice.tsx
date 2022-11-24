@@ -17,8 +17,6 @@ export const toastSlice = createSlice({
       state.message = message;
       state.status = status;
       state.isOpen = isOpen;
-
-      console.log(message, status, isOpen);
     },
   },
 });
