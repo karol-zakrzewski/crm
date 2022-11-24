@@ -9,9 +9,9 @@ import {
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../../api/todos";
 import json from "../../../assets/data.json";
 import { toastActions } from "../../../store/toast-slice";
+import { addTodoThunk } from "../../../store/todos-slice";
 import { Todo } from "../../../types/todo";
 
 type Props = {
@@ -31,7 +31,7 @@ const AddTodoDialog = ({
   handleClose,
 }: Props) => {
   const [isDisabledAddBtn, setIsDisabledAddBtn] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch: (dispatch: any) => Promise<void> = useDispatch();
   const {
     reset,
     control,
@@ -45,15 +45,8 @@ const AddTodoDialog = ({
         throw new Error(json.toastMessage.failedAddTodo);
       }
       setIsDisabledAddBtn(true);
-      await addTodo(companyId, { ...data, checked: false });
+      dispatch(addTodoThunk(companyId, { ...data, checked: false }));
       handleClose();
-      dispatch(
-        toastActions.showToast({
-          isOpen: true,
-          message: json.toastMessage.successAddTodo,
-          status: "success",
-        })
-      );
       setIsDisabledAddBtn(false);
       reset();
     } catch (error) {

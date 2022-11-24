@@ -10,27 +10,39 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import { useState } from "react";
+import { FirebaseError } from "firebase/app";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { toastActions } from "../../../store/toast-slice";
+import { fetchTodosThunk } from "../../../store/todos-slice";
+import { Store } from "../../../types/store";
 import AddTodoDialog from "../../ui/dialog/AddTodoDialog";
 
 const Todo = () => {
   const { id } = useParams();
   const [openAddTodoDialog, setOpenAddTodoDialog] = useState(false);
-  const [checked, setChecked] = useState([0]);
+  const dispatch: (dispatch: any) => Promise<void> = useDispatch();
+  const { todosList } = useSelector((state: Store) => state.todos);
 
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+  useEffect(() => {
+    try {
+      if (typeof id !== "string") {
+        throw new Error("Cannot fetch todos");
+      }
+      dispatch(fetchTodosThunk(id));
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        dispatch(
+          toastActions.showToast({
+            isOpen: true,
+            message: error.message,
+            status: "error",
+          })
+        );
+      }
     }
-
-    setChecked(newChecked);
-  };
+  }, [dispatch]);
   return (
     <>
       <List
@@ -51,37 +63,31 @@ const Todo = () => {
         }
       >
         <Divider />
-        {[0, 1, 2, 3].map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
-
-          return (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <IconButton edge="end" aria-label="comments"></IconButton>
-              }
-              disablePadding
-              divider
-            >
-              <ListItemButton
-                role={undefined}
-                onClick={handleToggle(value)}
-                dense
+        {todosList &&
+          todosList.map((todo) => {
+            return (
+              <ListItem
+                key={todo.id}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="comments"></IconButton>
+                }
+                disablePadding
+                divider
               >
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={checked.indexOf(value) !== -1}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
-                </ListItemIcon>
-                <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+                <ListItemButton role={undefined} dense>
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      checked={todo.checked}
+                      tabIndex={-1}
+                      disableRipple
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={todo.id} primary={todo.name} />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
       </List>
       <AddTodoDialog
         companyId={id}
