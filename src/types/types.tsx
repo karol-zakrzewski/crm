@@ -1,5 +1,5 @@
 export interface CompaniesType {
-  id?: string;
+  id: string;
   name: string;
   nip: number;
   address: {

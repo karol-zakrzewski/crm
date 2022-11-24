@@ -5,18 +5,12 @@ import {
   CollectionReference,
   getDocs,
 } from "firebase/firestore";
+import { Todo } from "../../types/todo";
 import { db } from "../api";
 
 const COLLECTION_NAMES = {
   TODOS: "todos",
   COMPANIES: "companies",
-};
-
-export type Todo = {
-  id: string;
-  name: string;
-  checked: boolean;
-  expire: string;
 };
 
 export const getTodos = async (companyId: string) => {

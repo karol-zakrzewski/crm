@@ -8,7 +8,7 @@ import { fetchCompanies } from "../../store/companies-slice";
 
 const Companies = () => {
   const { companiesList } = useSelector(
-    (state: { companies: { companiesList: Omit<CompaniesType, "id">[] } }) =>
+    (state: { companies: { companiesList: CompaniesType[] } }) =>
       state.companies
   );
   const dispatch: (dispatch: any) => Promise<void> = useDispatch();

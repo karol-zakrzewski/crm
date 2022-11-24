@@ -9,9 +9,10 @@ import {
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addTodo, Todo } from "../../../api/todos";
+import { addTodo } from "../../../api/todos";
 import json from "../../../assets/data.json";
 import { toastActions } from "../../../store/toast-slice";
+import { Todo } from "../../../types/todo";
 
 type Props = {
   companyId: string | undefined;
