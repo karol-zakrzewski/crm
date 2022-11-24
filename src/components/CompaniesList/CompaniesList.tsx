@@ -23,13 +23,13 @@ const CompaniesList = ({ companiesList }: Props) => {
       <Table sx={{ minWidth: 650 }} aria-label="Tabela przedsiębiorstw">
         <TableHead>
           <TableRow>
+            <TableCell align="left">Akcja</TableCell>
             <TableCell>Nazwa firmy</TableCell>
             <TableCell align="right">NIP</TableCell>
             <TableCell align="right">Miasto</TableCell>
             <TableCell align="right">Ulica</TableCell>
             <TableCell align="right">Kod pocztowy</TableCell>
             <TableCell align="right"></TableCell>
-            <TableCell align="right">Akcja</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{renderCompanies}</TableBody>

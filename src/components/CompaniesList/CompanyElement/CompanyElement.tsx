@@ -66,42 +66,7 @@ const ComponentElement = ({ company }: Props) => {
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <TableCell
-          component="th"
-          scope="row"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          {company.name}
-        </TableCell>
-        <TableCell
-          align="right"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          {company.nip}
-        </TableCell>
-        <TableCell
-          align="right"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          {company.address.city}
-        </TableCell>
-        <TableCell align="right">{company.address.street}</TableCell>
-        <TableCell align="right">{company.address.zipcode}</TableCell>
-        <TableCell align="right">
-          <Link
-            className="link__company__details"
-            to={`/company/${company.id}`}
-          >
-            Szczegóły
-          </Link>
-        </TableCell>
-        <TableCell align="right" className="action__cell">
+        <TableCell align="left" className="action__cell">
           <IconButton
             aria-label="more"
             id="long-button"
@@ -134,6 +99,42 @@ const ComponentElement = ({ company }: Props) => {
               <ListItemText>Delete</ListItemText>
             </MenuItem>
           </Menu>
+        </TableCell>
+        <TableCell
+          component="th"
+          scope="row"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          {company.name}
+        </TableCell>
+        <TableCell
+          align="right"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          {company.nip}
+        </TableCell>
+        <TableCell
+          align="right"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          {company.address.city}
+        </TableCell>
+        <TableCell align="right">{company.address.street}</TableCell>
+        <TableCell align="right">{company.address.zipcode}</TableCell>
+
+        <TableCell align="right">
+          <Link
+            className="link__company__details"
+            to={`/company/${company.id}`}
+          >
+            Szczegóły
+          </Link>
         </TableCell>
       </TableRow>
       <ConfirmDialog
