@@ -20,6 +20,10 @@
   "toastMessage": {
     "successAddCompany": "Company added",
     "successAddTodo": "Task added",
-    "failedAddTodo": "Task cannot be added"
+    "successEditTodo": "Task edited",
+    "successDeleteTodo": "Task deleted",
+    "failedAddTodo": "Task cannot be added",
+    "failedEditTodo": "Task cannot be edited",
+    "failedDeleteTodo": "Task cannot be deleted"
   }
 }

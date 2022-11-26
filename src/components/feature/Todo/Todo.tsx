@@ -1,15 +1,4 @@
-import {
-  List,
-  ListItem,
-  IconButton,
-  ListItemButton,
-  ListItemIcon,
-  Checkbox,
-  ListItemText,
-  ListSubheader,
-  Button,
-  Divider,
-} from "@mui/material";
+import { List, ListSubheader, Button, Divider } from "@mui/material";
 import { FirebaseError } from "firebase/app";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +7,7 @@ import { toastActions } from "../../../store/toast-slice";
 import { fetchTodosThunk } from "../../../store/todos-slice";
 import { Store } from "../../../types/store";
 import AddTodoDialog from "../../ui/dialog/AddTodoDialog";
+import TodoElement from "./TodoElement/TodoElement";
 
 const Todo = () => {
   const { id } = useParams();
@@ -42,7 +32,7 @@ const Todo = () => {
         );
       }
     }
-  }, [dispatch]);
+  }, [id, dispatch]);
   return (
     <>
       <List
@@ -64,28 +54,13 @@ const Todo = () => {
       >
         <Divider />
         {todosList &&
-          todosList.map((todo) => {
+          todosList.map((todo, index) => {
             return (
-              <ListItem
-                key={todo.id}
-                secondaryAction={
-                  <IconButton edge="end" aria-label="comments"></IconButton>
-                }
-                disablePadding
-                divider
-              >
-                <ListItemButton role={undefined} dense>
-                  <ListItemIcon>
-                    <Checkbox
-                      edge="start"
-                      checked={todo.checked}
-                      tabIndex={-1}
-                      disableRipple
-                    />
-                  </ListItemIcon>
-                  <ListItemText id={todo.id} primary={todo.name} />
-                </ListItemButton>
-              </ListItem>
+              <TodoElement
+                key={`${todo.id}-${index}`}
+                todo={todo}
+                companyId={id}
+              />
             );
           })}
       </List>
