@@ -29,7 +29,7 @@ function App() {
               element={<EditCompany />}
             />
             <Route path="/company/:id" element={<CompanyDetails />} />
-            <Route path="/sales" element={<Sales />} />
+            <Route path={paths.deal} element={<Sales />} />
           </Routes>
         </BrowserRouter>
         <Toast />

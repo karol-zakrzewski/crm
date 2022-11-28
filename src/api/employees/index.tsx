@@ -1,10 +1,4 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  FirestoreError,
-  getDoc,
-} from "firebase/firestore";
+import { addDoc, collection, FirestoreError } from "firebase/firestore";
 import { Employee } from "../../types/types";
 import { db } from "../api";
 
