@@ -19,7 +19,7 @@ export const dealsSlice = createSlice({
 });
 
 export const fetchDealsThunk = () => {
-  return async (dispatch) => {
+  return async (dispatch: any) => {
     try {
       await fetchDeals();
     } catch (error) {}
