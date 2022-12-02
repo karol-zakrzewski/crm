@@ -13,6 +13,10 @@ type Rules = {
     value: number;
     message: string;
   };
+  pattern: {
+    value: RegExp;
+    message: string;
+  };
 };
 
 type Props = {
@@ -24,6 +28,7 @@ type Props = {
 };
 
 const TextInput: FC<Props> = ({ control, errors, fieldName, label, rules }) => {
+  const a = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   return (
     <Controller
       name={fieldName}
@@ -31,6 +36,7 @@ const TextInput: FC<Props> = ({ control, errors, fieldName, label, rules }) => {
       rules={rules}
       render={({ field }) => (
         <TextField
+          fullWidth
           label={label}
           variant="outlined"
           error={errors[fieldName] ? true : undefined}

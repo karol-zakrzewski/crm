@@ -40,14 +40,14 @@ const ComponentElement = ({ company }: Props) => {
   const handleDelete = async () => {
     try {
       if (typeof company.id !== "string") {
-        throw new Error("Nieprawidłowe id");
+        throw new Error(jsonText.toastMessage.failedDeleteCompany);
       }
       dispatch(deleteCompanyThunk(company.id));
       setIsOpenConfirmDialog(false);
       dispatch(
         toastActions.showToast({
           isOpen: true,
-          message: jsonText.toastMessage.successAddCompany,
+          message: jsonText.toastMessage.successDeleteCompany,
           status: "success",
         })
       );

@@ -7,9 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCompany } from "../../../api";
 import CompanyForm from "../../../components/Form/CompanyForm";
 import { editCompanyThunk } from "../../../store/companies-slice";
+import { toastActions } from "../../../store/toast-slice";
 import { AddCompanyFormTypes } from "../../../types/types";
 import { convertFormDataToDBObject } from "../../../utils";
 import { paths } from "../../../utils/paths";
+import jsonText from "../../../assets/data.json";
 
 const defaultValue: AddCompanyFormTypes = {
   name: "",
@@ -36,22 +38,33 @@ const EditCompany = () => {
   } = useForm<AddCompanyFormTypes>({
     defaultValues: defaultValue,
   });
-  const dispatch = useDispatch();
+  const dispatch: (dispatch: any) => Promise<void> = useDispatch();
   const onSubmit: SubmitHandler<AddCompanyFormTypes> = async (data) => {
     const writableData = convertFormDataToDBObject(data);
     try {
       if (typeof id !== "string") {
         throw new Error("Nieprawidłowe id");
       }
-      // @ts-ignore
       dispatch(editCompanyThunk(id, writableData));
-      // TODO show toast message
+      dispatch(
+        toastActions.showToast({
+          isOpen: true,
+          message: jsonText.toastMessage.successEditTodo,
+          status: "success",
+        })
+      );
       setTimeout(() => {
         navigate(paths.companies);
       });
     } catch (error) {
       if (error instanceof Error) {
-        // TODO show error toast message
+        dispatch(
+          toastActions.showToast({
+            isOpen: true,
+            message: error.message,
+            status: "error",
+          })
+        );
       }
     }
   };
@@ -78,13 +91,13 @@ const EditCompany = () => {
   if (isLoading) {
     return <CircularProgress />;
   } else if (error) {
-    return <h2>Oops coś poszło nie tak</h2>;
+    return <h2>Oops something went wrong...</h2>;
   }
 
   return (
     <>
-      <h2>Edit - {id}</h2>
       <CompanyForm
+        title="Edit form"
         control={control}
         errors={errors}
         handleSubmit={handleSubmit}

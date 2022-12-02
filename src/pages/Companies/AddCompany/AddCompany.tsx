@@ -1,13 +1,15 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid, Paper } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AddCompanyFormTypes, CompaniesType } from "../../../types/types";
 import { convertFormDataToDBObject } from "../../../utils";
 import { paths } from "../../../utils/paths";
-import TextInput from "../../../components/ui/inputs/TextInput";
 import "./AddCompany.css";
 import { useDispatch } from "react-redux";
 import { addCompanyThunk } from "../../../store/companies-slice";
+import { toastActions } from "../../../store/toast-slice";
+import jsonText from "../../../assets/data.json";
+import CompanyForm from "../../../components/Form/CompanyForm";
 
 const defaultValue: AddCompanyFormTypes = {
   name: "",
@@ -34,121 +36,37 @@ const AddCompany = () => {
       convertFormDataToDBObject(data);
     try {
       dispatch(addCompanyThunk(writableData));
-      // TODO show toast message
+      dispatch(
+        toastActions.showToast({
+          isOpen: true,
+          message: jsonText.toastMessage.successAddCompany,
+          status: "success",
+        })
+      );
       setTimeout(() => {
         navigate(paths.companies);
       });
     } catch (error) {
       if (error instanceof Error) {
-        // TODO show error toast message
+        dispatch(
+          toastActions.showToast({
+            isOpen: true,
+            message: error.message,
+            status: "error",
+          })
+        );
       }
     }
   };
 
   return (
-    <div>
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="name"
-          label="Nazwa firmy"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="city"
-          label="Miasto"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="street"
-          label="Ulica"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="zipcode"
-          label="Kod pocztowy"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-            minLength: {
-              value: 5,
-              message: "Niepoprawny numer telefonu",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="email"
-          label="Email"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="nip"
-          label="NIP"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-            minLength: {
-              value: 10,
-              message: "Niepoprawny numer telefonu",
-            },
-          }}
-        />
-        <TextInput
-          control={control}
-          errors={errors}
-          fieldName="phone"
-          label="Numer telefonu"
-          rules={{
-            required: {
-              value: true,
-              message: "To pole jest wymagane",
-            },
-            minLength: {
-              value: 9,
-              message: "Niepoprawny numer telefonu",
-            },
-          }}
-        />
-        <Button variant="contained" type="submit">
-          Dodaj
-        </Button>
-      </Box>
-    </div>
+    <CompanyForm
+      title="Add company"
+      control={control}
+      errors={errors}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    />
   );
 };
 

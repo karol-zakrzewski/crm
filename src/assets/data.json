@@ -22,8 +22,10 @@
     "successAddTodo": "Task added",
     "successEditTodo": "Task edited",
     "successDeleteTodo": "Task deleted",
+    "successDeleteCompany": "Company deleted",
     "failedAddTodo": "Task cannot be added",
     "failedEditTodo": "Task cannot be edited",
-    "failedDeleteTodo": "Task cannot be deleted"
+    "failedDeleteTodo": "Task cannot be deleted",
+    "failedDeleteCompany": "Company cannot be deleted"
   }
 }
