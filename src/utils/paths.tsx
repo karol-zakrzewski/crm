@@ -4,4 +4,5 @@ export const paths = {
   addDeal: "/deal/add",
   deal: "/deal",
   editComapny: "/companies/edit",
+  home: "/",
 };
