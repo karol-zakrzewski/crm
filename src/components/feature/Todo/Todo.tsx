@@ -36,7 +36,7 @@ const Todo = () => {
   return (
     <>
       <List
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        sx={{ width: "100%", bgcolor: "background.paper" }}
         subheader={
           <ListSubheader
             sx={{
