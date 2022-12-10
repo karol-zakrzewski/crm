@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { FirestoreError } from "firebase/firestore";
 import { fetchDeals } from "../api/deals";
 import { Deal } from "../types/deals";
 
@@ -21,8 +22,13 @@ export const dealsSlice = createSlice({
 export const fetchDealsThunk = () => {
   return async (dispatch: any) => {
     try {
-      await fetchDeals();
-    } catch (error) {}
+      const data = await fetchDeals();
+      dispatch(dealsActions.replaceData(data));
+    } catch (error) {
+      if (error instanceof FirestoreError) {
+        throw Error(error.message);
+      }
+    }
   };
 };
 

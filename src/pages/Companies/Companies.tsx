@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCompanies } from "../../store/companies-slice";
 import { Link } from "react-router-dom";
 import { paths } from "../../utils/paths";
-import { IconButton } from "@mui/material";
+import { CircularProgress, IconButton } from "@mui/material";
 import { FaUserPlus } from "react-icons/fa";
 import styled from "@emotion/styled";
 
@@ -32,6 +32,10 @@ const Companies = () => {
   useEffect(() => {
     dispatch(fetchCompanies());
   }, [dispatch]);
+
+  if (!companiesList) {
+    return <CircularProgress />;
+  }
 
   return (
     <div className="companies__container">
