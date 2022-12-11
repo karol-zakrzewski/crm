@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toastActions } from "../../store/toast-slice";
 import { Deal } from "../../types/deals";
 import Table, { TableHeading } from "../../components/ui/table/Table";
+import DealRowElement from "../../components/Deals/DealListElement/DealRowElement";
 
 const headings: TableHeading[] = [
   {
     name: "Name",
-    align: "right",
+    align: "left",
   },
   {
     name: "Open date",
@@ -64,8 +65,8 @@ const Sales = () => {
         </Link>
       </Header>
       <Table tableHeadings={headings}>
-        {dealsList.map(({ name, closeDate, company, id, openDate, source }) => {
-          return <div>{name}</div>;
+        {dealsList.map((deal) => {
+          return <DealRowElement deal={deal} />;
         })}
       </Table>
     </Container>
