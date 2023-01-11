@@ -11,6 +11,7 @@ import AddCompany from "./pages/Companies/AddCompany/AddCompany";
 import { paths } from "./utils/paths";
 import EditCompany from "./pages/Companies/EditCompany/EditCompany";
 import Toast from "./components/Feature/Toast/Toast";
+import AddDeal from "./pages/Sales/addDeal";
 const queryClient = new QueryClient();
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             />
             <Route path="/company/:id" element={<CompanyDetails />} />
             <Route path={paths.deal} element={<Sales />} />
+            <Route path={paths.addDeal} element={<AddDeal />} />
           </Routes>
         </BrowserRouter>
         <Toast />

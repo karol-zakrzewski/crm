@@ -77,8 +77,8 @@ const CompanyForm = ({
                   value: true,
                   message: "Required",
                 },
-                minLength: {
-                  value: 5,
+                pattern: {
+                  value: /^[0-9]{2}-[0-9]{3}$/,
                   message: "Zipcode is incorrect",
                 },
               }}
